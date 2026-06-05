@@ -3,7 +3,7 @@ import { useAppContext } from '../context/AppContext';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { IconReport, IconChartBar, IconDownload, IconRefresh } from '@tabler/icons-react';
+import { IconReport, IconChartBar, IconDownload, IconRefresh, IconFileTypePdf } from '@tabler/icons-react';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 
@@ -32,6 +32,10 @@ const Relatorios = () => {
       });
   };
 
+  const downloadPerformancePDF = () => {
+    window.open('http://localhost:3000/api/metrics/download', '_blank');
+  };
+
   useEffect(() => {
     if (activeView === 'metricas' && user?.NivelAcesso === 0) {
       fetchMetrics();
@@ -44,7 +48,7 @@ const Relatorios = () => {
       { 
         label: 'Latência (ms)', 
         data: metrics.map(m => m.latency), 
-        backgroundColor: '#00D1FF', // Azul vibrante
+        backgroundColor: '#00D1FF',
         borderRadius: 5,
         borderWidth: 1,
         borderColor: '#00D1FF'
@@ -52,7 +56,7 @@ const Relatorios = () => {
       { 
         label: 'Processamento (ms)', 
         data: metrics.map(m => m.processingTime), 
-        backgroundColor: '#FFFFFF', // Branco
+        backgroundColor: '#FFFFFF',
         borderRadius: 5,
         borderWidth: 1,
         borderColor: '#FFFFFF'
@@ -183,9 +187,14 @@ const Relatorios = () => {
               <h3 style={{ margin: 0, letterSpacing: '1px' }}>MÉTRICAS DE QUALIDADE (AV03)</h3>
               <p style={{ fontSize: '11px', color: '#666', marginTop: '5px' }}>Análise de desempenho em milissegundos</p>
             </div>
-            <button className="btn btn-sm" onClick={fetchMetrics} disabled={loadingMetrics}>
-              <IconRefresh size={16} className={loadingMetrics ? 'spin' : ''} />
-            </button>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button className="btn btn-sm btn-primary" onClick={downloadPerformancePDF}>
+                <IconFileTypePdf size={16} /> BAIXAR PDF
+              </button>
+              <button className="btn btn-sm" onClick={fetchMetrics} disabled={loadingMetrics}>
+                <IconRefresh size={16} className={loadingMetrics ? 'spin' : ''} />
+              </button>
+            </div>
           </div>
           
           {loadingMetrics && metrics.length === 0 ? (
