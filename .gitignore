@@ -1,0 +1,18 @@
+# Dependências
+node_modules/
+front/node_modules/
+back/node_modules/
+
+# Variáveis de ambiente (Segurança)
+.env
+back/.env
+
+# Pastas de Build (Resultado da compilação)
+front/dist/
+back/dist/
+
+# Arquivos do Sistema e IDEs
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

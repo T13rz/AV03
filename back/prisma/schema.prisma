@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Funcionario {
+  id          String   @id @default(uuid())
+  nome        String
+  telefone    String?
+  endereco    String?
+  usuario     String   @unique
+  senha       String
+  nivelAcesso Int
+  etapas      Etapa[]
+}
+
+model Aeronave {
+  codigo     String   @id
+  modelo     String
+  tipo       Int
+  alcance    Int
+  capacidade Int
+  pecas      Peca[]
+  etapas     Etapa[]
+  testes     Teste[]
+}
+
+model Peca {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  fornecedor  String
+  tipo        Int
+  status      Int
+  aeronaveId  String
+  aeronave    Aeronave @relation(fields: [aeronaveId], references: [codigo])
+}
+
+model Etapa {
+  id           Int           @id @default(autoincrement())
+  nome         String
+  prazo        DateTime
+  status       Int
+  aeronaveId   String
+  aeronave     Aeronave      @relation(fields: [aeronaveId], references: [codigo])
+  funcionarios Funcionario[]
+}
+
+model Teste {
+  id         Int      @id @default(autoincrement())
+  testId     String
+  tipo       Int
+  status     Int
+  aeronaveId String
+  aeronave   Aeronave @relation(fields: [aeronaveId], references: [codigo])
+}
+
+model PerformanceMetric {
+  id               Int      @id @default(autoincrement())
+  metricName       String
+  value            Float
+  userLoad         Int
+  timestamp        DateTime @default(now())
+}
