@@ -1,84 +1,98 @@
 # 🐲 DrakoSys AeroCode - Guia do Usuário
 
-Bem-vindo ao **DrakoSys AeroCode**, um sistema robusto para o gerenciamento de fabricação de aeronaves e controle de qualidade industrial. Este guia foi feito para ajudar você a instalar e rodar o programa de forma simples.
+Bem-vindo ao **DrakoSys AeroCode**, um sistema profissional para o gerenciamento de fabricação de aeronaves e controle de qualidade industrial. Este guia foi projetado para que qualquer pessoa consiga instalar e rodar o projeto do zero.
 
 ---
 
 ## 📝 Sobre o Projeto
 
-O DrakoSys AeroCode é uma plataforma modular dividida em:
-1.  **Front (A Interface):** Interface moderna em React com tema industrial, contendo uma nova **Home Page** intuitiva com atalhos rápidos.
-2.  **Back (O Cérebro):** Servidor Node.js/Express que fornece métricas de performance e gerencia a lógica de negócio.
-3.  **BD (Banco de Dados):** Persistência segura em MySQL utilizando **Prisma ORM v6.4.1** para compatibilidade total.
+O sistema é dividido em duas partes que funcionam juntas:
+1.  **Front (Interface):** O que você acessa no navegador (feita em React). Possui uma **Página Inicial** intuitiva com atalhos para todas as funções.
+2.  **Back (Servidor e Banco de Dados):** O "cérebro" que processa os dados e guarda tudo no **MySQL** de forma segura, utilizando a tecnologia **Prisma ORM v6.4.1** para garantir que funcione tanto em Windows quanto em Linux.
 
 ### 📸 Telas do Sistema
+*(Coloque seus prints na pasta `docs/assets/sysp` para visualizá-los aqui)*
 
 #### Página Inicial
 ![Home](docs/assets/sysp/dashboard.png)
 
-#### Gerenciamento Operacional (Peças e Etapas)
+#### Gerenciamento Operacional
 ![Operacoes](docs/assets/sysp/operacoes.png)
 
-#### Métricas de Performance (AV03)
+#### Métricas de Performance (Relatórios)
 ![Metricas](docs/assets/sysp/metricas.png)
 
 ---
 
 ## 🔐 Credenciais de Acesso (Login)
 
+Para entrar no sistema, escolha um dos perfis abaixo:
+
 | Cargo | Usuário | Senha | Permissões |
 | :--- | :--- | :--- | :--- |
-| **Administrador** | `admin` | `admin123` | Acesso total + Métricas de Qualidade |
-| **Engenheiro** | `Tilapia` | `WDC2025` | Frota, Peças e Testes |
-| **Operador** | `destroi` | `dummy` | Apenas Etapas de Produção |
+| **Administrador** | `admin` | `admin123` | Acesso total + Ver Gráficos de Performance |
+| **Engenheiro** | `Tilapia` | `WDC2025` | Gerir Frota, Peças e Testes |
+| **Operador** | `destroi` | `dummy` | Apenas gerenciar Etapas de Produção |
 
 ---
 
-## ⚙️ Pré-requisitos
+## ⚙️ Pré-requisitos (O que instalar antes)
 
-1.  **Node.js:** v18 ou superior.
-2.  **MySQL Server:** v8.0 ou superior.
+Você precisa ter dois programas instalados no seu computador:
+1.  **Node.js:** Baixe a versão **LTS** (mais estável) em [nodejs.org](https://nodejs.org/).
+2.  **MySQL Installer:** Baixe o "MySQL Community Server" em [mysql.com](https://dev.mysql.com/downloads/installer/). **Importante:** Durante a instalação, defina uma senha para o usuário `root` e anote-a!
 
 ---
 
-## 🛠️ Instalação (Passo a Passo)
+## 🛠️ Instalação Passo a Passo
 
-### 1. Banco de Dados
-No seu cliente MySQL (Workbench/Terminal), execute:
+### 1. Preparar o Banco de Dados
+Abra o programa **MySQL Workbench** (que instalou junto com o MySQL), conecte-se ao seu servidor e cole o comando abaixo:
 ```sql
 CREATE DATABASE aerocode;
 ```
+*Isso criará o "espaço" onde o programa salvará as informações.*
 
-### 2. Servidor (Back)
-1.  Na pasta `back`, crie um arquivo `.env`.
-2.  Adicione a linha (ajuste sua senha):
+### 2. Configurar o Servidor (Pasta `/back`)
+1.  Abra a pasta do projeto no seu computador.
+2.  Entre na pasta chamada `back`.
+3.  Crie um novo arquivo chamado exatamente `.env` (ou edite se já existir).
+4.  Cole a linha abaixo dentro dele, substituindo `SUA_SENHA` pela senha que você criou no MySQL:
     `DATABASE_URL="mysql://root:SUA_SENHA@localhost:3306/aerocode"`
-3.  No terminal da pasta `back`:
+5.  Agora, abra um **Terminal** dentro desta pasta `back` e digite os seguintes comandos um por um:
     ```bash
+    # Instalar as ferramentas necessárias
     npm install
+
+    # Preparar a conexão com o banco de dados
     npx prisma generate
+
+    # Criar as tabelas automaticamente
     npx prisma migrate dev --name init
     ```
 
-### 3. Interface (Front)
-1.  No terminal da pasta `front`:
+### 3. Configurar a Interface (Pasta `/front`)
+1.  Volte para a pasta principal do projeto e entre na pasta `front`.
+2.  Abra um **Terminal** nesta pasta e digite:
     ```bash
     npm install
     ```
 
 ---
 
-## 🚀 Como Executar
+## 🚀 Como Executar o Sistema
 
-1.  **Back:** Na pasta `back`, rode `npm run dev`.
-2.  **Front:** Na pasta `front`, rode `npm run dev`.
-3.  **Acesso:** Abra `http://localhost:5173` no seu navegador.
+Para o programa funcionar, você precisa deixar **dois terminais abertos**:
 
----
+1.  **Terminal 1 (Servidor):** Na pasta `back`, digite: `npm run dev`
+2.  **Terminal 2 (Interface):** Na pasta `front`, digite: `npm run dev`
 
-## 💡 Curiosidades
-- **Métricas:** Administradores podem visualizar gráficos dinâmicos de latência e processamento em tempo real na aba de Relatórios.
-- **Easter Egg:** Tente clicar **7 vezes** no logo do dragão no topo da tela para ativar o modo **Turbo Blue Flame**! 🐉❄️
+Após ligar os dois, o Terminal 2 mostrará um link como `http://localhost:5173`. Copie e cole esse link no seu navegador Chrome ou Edge.
 
 ---
-*Desenvolvido para máxima precisão industrial.*
+
+## 💡 Dicas e Segredos
+-   **Gráficos:** Entre como `admin` e vá em **Relatórios > Métricas de Sistema** para ver os gráficos dinâmicos de velocidade do servidor!
+
+---
+*DrakoSys AeroCode — Tecnologia de ponta para a indústria aeroespacial.*
