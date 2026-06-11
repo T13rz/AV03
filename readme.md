@@ -11,7 +11,6 @@ O sistema é dividido em duas partes que funcionam juntas:
 2.  **Back (Servidor e Banco de Dados):** O "cérebro" que processa os dados e guarda tudo no **MySQL** de forma segura, utilizando a tecnologia **Prisma ORM v6.4.1** para garantir que funcione tanto em Windows quanto em Linux.
 
 ### 📸 Telas do Sistema
-*(Coloque seus prints na pasta `docs/assets/sysp` para visualizá-los aqui)*
 
 #### Página Inicial
 ![Home](docs/assets/sysp/dashboard.png)
